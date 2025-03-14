@@ -124,6 +124,7 @@ void print_word_ladder(const vector<string>& ladder){
     if (ladder.size() == 0)
         std::cout << ("No word ladder found.\n");
     else{
+        std::cout << ("Word ladder found: ");
     for(auto s: ladder)
         std::cout << s << " " ;
         std::cout << "\n";
