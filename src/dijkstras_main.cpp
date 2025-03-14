@@ -13,10 +13,11 @@ int main(){
     vector<int> prev;
     prev.resize(g.size());
 
-    vector<int> dsp = dijkstra_shortest_path(g, 1, prev);
+    vector<int> dsp = dijkstra_shortest_path(g, 0, prev);
     std::cout << endl;
-    //for (auto i: dsp)
+    vector<int> shor = extract_shortest_path(dsp, prev, 2);
+    //for (auto i: shor)
     //    cout << i << endl; 
-    print_path(dsp, dsp.size());
+    print_path(shor, dsp[2]);
     return 0;
 }
