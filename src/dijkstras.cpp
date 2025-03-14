@@ -16,8 +16,8 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     vector <bool> visited(numVertices, false);
     distances[source] = 0;
     previous[source] = UNDEFINED;
-    priority_queue<pair<int,int>> minHeap;
-    //std::priority_queue<pair<int, int>, std::vector<pair<int, int>>, myComparator> minHeap;
+    //priority_queue<pair<int,int>> minHeap;
+    std::priority_queue<pair<int, int>, std::vector<pair<int, int>>, myComparator> minHeap;
     minHeap.push({source,0});
     while(!minHeap.empty()){
         //int u = extract_shortest_path(distances, previous, minHeap.first)[minHeap.first];
@@ -43,15 +43,17 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
 
 vector<int> extract_shortest_path(const vector<int>& distances, const vector<int>& previous, int destination){
     vector<int> shortest;
+    stack<int> shortstack;
     int distance = distances[destination];
-    int j = -1;
-    for(int i = 0; j != destination; ++i)
+    //int j = destination;
+    for(int i = destination; i != -1 ;)
     {
-        if(previous[i] == j){
-            shortest.push_back(i);
-            j = i;
-            i = 0;
-        }
+        shortstack.push(i);
+        i = previous[i];
+    }
+    while(!shortstack.empty()){
+        shortest.push_back(shortstack.top());
+        shortstack.pop();
     }
     return shortest;
 }

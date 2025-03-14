@@ -16,8 +16,8 @@ int main(){
     vector<int> dsp = dijkstra_shortest_path(g, 0, prev);
     std::cout << endl;
     vector<int> shor = extract_shortest_path(dsp, prev, 2);
-    //for (auto i: shor)
-    //    cout << i << endl; 
+    for (auto i: prev)
+        cout << i << endl; 
     print_path(shor, dsp[2]);
     return 0;
 }
