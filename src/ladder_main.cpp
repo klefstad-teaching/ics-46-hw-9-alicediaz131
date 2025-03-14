@@ -14,6 +14,6 @@ int main(){
         std::cout << std::endl << s;
 
     
-    //verify_word_ladder();
+    verify_word_ladder();
     return 0;
 }

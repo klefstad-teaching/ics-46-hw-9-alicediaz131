@@ -27,7 +27,13 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
 
 
 bool is_adjacent(const string& word1, const string& word2){
-    return edit_distance_within(word1, word2, 1);
+    //wsize1 = word1.size();
+    //wsize2 = word2.size();
+    int sizediff = word1.size() - word2.size();
+
+    if (-1 <= sizediff && 1 >= sizediff)
+        return edit_distance_within(word1, word2, 1);
+    else return false;
 }
 
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list){
@@ -37,14 +43,33 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
     ladder_queue.push(vector<string>{begin_word});
     //vector<string> result;
 
-    int wordlen = begin_word.size();
-    int level = 1;
+    //int wordlen = begin_word.size();
+    //int level = 1;
     //unordered_set<string> set(word_list.begin(), word_list.end());
     set<string> visited;
 
     visited.insert(begin_word);
 
-    
+    while(!ladder_queue.empty()){
+        vector<string> ladder = ladder_queue.front();
+        ladder_queue.pop();
+        string last_word = ladder.back();
+        for(string w: word_list)
+            if(!visited.contains(w))
+                if(is_adjacent(last_word, w)){
+                    if(!visited.contains(w)){
+                        visited.insert(w);
+                        //std::cout <<"\nvisited now has: " << w << " adjacanent to " << last_word << std::endl;
+                        vector<string> new_ladder = ladder;
+                        new_ladder.push_back(w);
+                        if(w == end_word)
+                            return new_ladder;
+                        ladder_queue.push(new_ladder);
+                    }
+                }
+
+    }
+    /*
     while(!ladder_queue.empty()){
         int qsize = ladder_queue.size();
         for(int i = 0; i < qsize; ++i){ 
@@ -64,6 +89,8 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
                 }
         }
     }
+
+    */
     vector<string> result;
     return result;
 }
