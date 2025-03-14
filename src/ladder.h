@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 #include <cmath>
+#include <unordered_set>
+#include <cstring>
 
 using namespace std;
 
