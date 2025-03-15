@@ -8,11 +8,11 @@ int main(){
     set<string> words;
     load_words(words, "src/words.txt");
 
-    vector<string> ladder = generate_word_ladder("cat", "cheat", words);
+    vector<string> ladder = generate_word_ladder("cat", "dog", words);
 
     for(auto s: ladder)
         std::cout << std::endl << s;
-
+        
     
     verify_word_ladder();
     return 0;

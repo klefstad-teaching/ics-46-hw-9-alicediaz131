@@ -16,13 +16,10 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     vector <bool> visited(numVertices, false);
     distances[source] = 0;
     previous[source] = UNDEFINED;
-    //priority_queue<pair<int,int>> minHeap;
     std::priority_queue<pair<int, int>, std::vector<pair<int, int>>, myComparator> minHeap;
     minHeap.push({source,0});
     while(!minHeap.empty()){
-        //int u = extract_shortest_path(distances, previous, minHeap.first)[minHeap.first];
         int u = minHeap.top().first;
-        //minHeap.extract_shortest_path().first;
         minHeap.pop();
         if(visited[u]) continue;
         visited[u] = true;
@@ -37,7 +34,6 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
         }
     }
     return distances;
-    //return extract_shortest_path(distances, previous, )
 }
 
 
@@ -45,7 +41,7 @@ vector<int> extract_shortest_path(const vector<int>& distances, const vector<int
     vector<int> shortest;
     stack<int> shortstack;
     int distance = distances[destination];
-    //int j = destination;
+    
     for(int i = destination; i != -1 ;)
     {
         shortstack.push(i);
@@ -61,10 +57,8 @@ vector<int> extract_shortest_path(const vector<int>& distances, const vector<int
 
 
 void print_path(const vector<int>& v, int total){
-    //total = 0;
     for (auto i: v){
         cout << i << " "; 
-        //total += i;
     }
     std::cout << "\nTotal cost is " << total << "\n";
     

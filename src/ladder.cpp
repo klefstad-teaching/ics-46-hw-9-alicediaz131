@@ -35,38 +35,94 @@ bool is_adjacent(const string& word1, const string& word2){
         return edit_distance_within(word1, word2, 1);
     else return false;
 }
+
+
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list){
-    queue<string> ladder_queue;
-    ladder_queue.push(begin_word);
+    queue<vector<string>> ladder_queue;
+    ladder_queue.push(vector<string>{begin_word});
     vector<string> result;
     //result.push_back(begin_word);
 
-    unordered_set<string> visited;
+    set<string> visited;
     visited.insert(begin_word);
 
 
     while(!ladder_queue.empty()){
         int len = ladder_queue.size();
-        result.push_back(ladder_queue.front());
+        result.push_back(ladder_queue.front().back());
         for (int i = 0; i < len; ++i) {
-            string word = ladder_queue.front();
+            //string word = ladder_queue.front();
+            vector<string> ladder = ladder_queue.front();
             ladder_queue.pop();
-            for(string w: word_list)
-                if(!visited.contains(w))
-                    if(is_adjacent(word, w)){
-                        visited.insert(w);
-                        //vector<string> new_ladder = ladder;
-                        
-                        if(w == end_word){
-                        result.push_back(w);
-                            return result;
-                        }
-                        ladder_queue.push(w);
-            }
+            string word = ladder.back();
+            
+            for (size_t j = 0; j < word.length(); ++j) {
+                string w = word;
 
+                for (char c = 'a'; c <= 'z'; ++c) {
+                    w[j] = c;
+                
+
+                if(word_list.contains(w) && !visited.contains(w) && is_adjacent(word, w))
+                    {
+                        visited.insert(w);
+
+                        vector<string> new_ladder = ladder;
+                        
+                        new_ladder.push_back(w);
+                        if(w == end_word)
+                            return new_ladder;
+                        ladder_queue.push(new_ladder);
+                     }
+                }
+                
+
+            }
+            for (size_t j = 0; j < word.length(); ++j){
+                string w = word;
+                w.erase(j,1); 
+
+
+                if(word_list.contains(w) && !visited.contains(w) && is_adjacent(word, w))
+                    {
+                        visited.insert(w);
+                        
+                        vector<string> new_ladder = ladder;
+                        
+
+                        new_ladder.push_back(w);
+                        if(w == end_word)
+                            return new_ladder;
+                        ladder_queue.push(new_ladder);
+                     }
+            }
+            for (size_t j = 0; j < word.length(); ++j) {
+                
+
+                for (char c = 'a'; c <= 'z'; ++c) {
+                    string w = word;
+                    w.insert(j, 1, c);
+                
+
+                if(word_list.contains(w) && !visited.contains(w) && is_adjacent(word, w))
+                    {
+                        visited.insert(w);
+
+                        vector<string> new_ladder = ladder;
+                        
+                        new_ladder.push_back(w);
+                        if(w == end_word)
+                            return new_ladder;
+                        ladder_queue.push(new_ladder);
+                     }
+                }
+                
+
+            }
+        
         }
     }
-    vector<string> empty;
+    vector<string> empty; 
     return empty;
 }
 
@@ -90,12 +146,12 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
         vector<string> ladder = ladder_queue.front();
         ladder_queue.pop();
         string last_word = ladder.back();
+        
         for(string w: word_list)
             if(!visited.contains(w))
                 if(is_adjacent(last_word, w)){
                     if(!visited.contains(w)){
                         visited.insert(w);
-                        //std::cout <<"\nvisited now has: " << w << " adjacanent to " << last_word << std::endl;
                         vector<string> new_ladder = ladder;
                         new_ladder.push_back(w);
                         if(w == end_word)
@@ -117,8 +173,10 @@ void load_words(set<string> & word_list, const string& file_name){
     //for(auto s: inFile)
         
 
-    for (string word; inFile >> word;)
+    for (string word; inFile >> word;){
+        tolower(word[0]);
         word_list.insert(word);
+    }
 }
 
 void print_word_ladder(const vector<string>& ladder){
