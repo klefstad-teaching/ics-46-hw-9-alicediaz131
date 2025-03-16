@@ -10,7 +10,7 @@ int main(){
     load_words(words, "src/words.txt");
     vector<string> ladder = generate_word_ladder("chat", "cat", words);
     print_word_ladder(ladder);
-    ladder = generate_word_ladder("awake", "sleep", words);
+    ladder = generate_word_ladder("marty", "curls", words);
     print_word_ladder(ladder);
     //for(auto s: ladder)
    //     std::cout << std::endl << s;
